@@ -1,0 +1,122 @@
+#include <iostream>
+#include <list>
+#include <string>
+
+using namespace std;
+
+class Phim {
+private:
+    string maPhim, tenPhim, theLoai;
+    double diemDanhGia;
+
+public:
+    Phim(string ma, string ten, string tl, double diem) 
+        : maPhim(ma), tenPhim(ten), theLoai(tl), diemDanhGia(diem) {}
+
+    string getMaPhim() const { return maPhim; }
+    double getDiem() const { return diemDanhGia; }
+
+    void hienThi() const {
+        cout << "Ma: " << maPhim << " | Ten: " << tenPhim 
+             << " | The loai: " << theLoai << " | Rating: " << diemDanhGia << endl;
+    }
+};
+
+int main() {
+    list<Phim> dsPhim;
+    int luaChon;
+
+    do {
+        cout << "\n========== MENU QUAN LY PHIM ==========" << endl;
+        cout << "1. Them phim moi" << endl;
+        cout << "2. Hien thi tat ca phim" << endl;
+        cout << "3. Tim phim theo ma" << endl;
+        cout << "4. Rating CAO NHAT" << endl;
+        cout << "5. Rating THAP NHAT" << endl;
+        cout << "0. Thoat" << endl;
+        cout << "Nhap lua chon: ";
+        cin >> luaChon;
+        cin.ignore();
+
+        switch (luaChon) {
+            case 1: {
+                char tiepTuc;
+                do {
+                    string ma, ten, tl;
+                    double diem;
+                    bool biTrung;
+
+                    // 1. KIỂM TRA TRÙNG MÃ
+                    do {
+                        biTrung = false;
+                        cout << "\nNhap ma phim: "; getline(cin, ma);
+                        
+                        // Duyệt danh sách cũ để kiểm tra
+                        for (const auto& p : dsPhim) {
+                            if (p.getMaPhim() == ma) {
+                                cout << "Loi: Ma phim nay da ton tai! Vui long nhap ma khac." << endl;
+                                biTrung = true;
+                                break;
+                            }
+                        }
+                    } while (biTrung == true); // Lặp lại nếu bị trùng
+
+                    cout << "Nhap ten phim: "; getline(cin, ten);
+                    cout << "Nhap the loai: "; getline(cin, tl);
+
+                    // 2. RÀNG BUỘC ĐIỂM (1-10)
+                    do {
+                        cout << "Nhap diem danh gia (1-10): ";
+                        cin >> diem;
+                        if (diem < 1 || diem > 10) {
+                            cout << "Loi: Diem phai nam trong khoang tu 1 den 10!" << endl;
+                        }
+                    } while (diem < 1 || diem > 10); // Lặp lại nếu điểm sai
+
+                    dsPhim.push_back(Phim(ma, ten, tl, diem));
+
+                    cout << "Ban co muon nhap tiep khong? (c/k): ";
+                    cin >> tiepTuc;
+                    cin.ignore();
+                } while (tiepTuc == 'c' || tiepTuc == 'C');
+                break;
+            }
+            case 2: {
+                if (dsPhim.empty()) cout << "\n>> Danh sach trong!" << endl;
+                else for (const auto& p : dsPhim) p.hienThi();
+                break;
+            }
+            case 3: {
+                string maTim;
+                cout << "Nhap ma phim can tim: "; getline(cin, maTim);
+                bool timThay = false;
+                for (const auto& p : dsPhim) {
+                    if (p.getMaPhim() == maTim) {
+                        p.hienThi(); timThay = true; break;
+                    }
+                }
+                if (!timThay) cout << "Khong tim thay!" << endl;
+                break;
+            }
+            case 4: {
+                if (dsPhim.empty()) cout << "\n>> Danh sach trong!" << endl;
+                else {
+                    Phim pMax = dsPhim.front();
+                    for (const auto& p : dsPhim) if (p.getDiem() > pMax.getDiem()) pMax = p;
+                    cout << "\n>> Rating CAO NHAT: "; pMax.hienThi();
+                }
+                break;
+            }
+            case 5: {
+                if (dsPhim.empty()) cout << "\n>> Danh sach trong!" << endl;
+                else {
+                    Phim pMin = dsPhim.front();
+                    for (const auto& p : dsPhim) if (p.getDiem() < pMin.getDiem()) pMin = p;
+                    cout << "\n>> Rating THAP NHAT: "; pMin.hienThi();
+                }
+                break;
+            }
+        }
+    } while (luaChon != 0);
+    return 0;
+}

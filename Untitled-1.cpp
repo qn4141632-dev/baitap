@@ -1,127 +1,173 @@
 #include <iostream>
-#include <list>
 #include <string>
-
 using namespace std;
 
-// Sử dụng Class để quản lý đối tượng Phim
-class Phim {
-private:
+// ===== Class Phim =====
+class Movie {
+public:
     string maPhim;
     string tenPhim;
     string theLoai;
-    double diemDanhGia;
+    float rating;
 
-public:
-    // Hàm khởi tạo (Constructor)
-    Phim(string ma, string ten, string tl, double diem) 
-        : maPhim(ma), tenPhim(ten), theLoai(tl), diemDanhGia(diem) {}
+    Movie* prev;
+    Movie* next;
 
-    // Các hàm lấy dữ liệu (Getters)
-    string getMaPhim() const { return maPhim; }
-    double getDiem() const { return diemDanhGia; }
-
-    // Hàm hiển thị thông tin phim
-    void hienThi() const {
-        cout << "Ma: " << maPhim << " | Ten: " << tenPhim 
-             << " | The loai: " << theLoai << " | Rating: " << diemDanhGia << endl;
+    Movie(string ma, string ten, string loai, float r) {
+        maPhim = ma;
+        tenPhim = ten;
+        theLoai = loai;
+        rating = r;
+        prev = next = NULL;
     }
 };
 
-int main() {
-    list<Phim> dsPhim;
-    int luaChon;
+// ===== Class Danh sách phim =====
+class MovieList {
+private:
+    Movie* head;
+
+public:
+    MovieList() {
+        head = NULL;
+    }
+    void addMovie() {
+        string ma, ten, loai;
+        float r;
+
+       
+
+
+
+        cin.ignore();
+        cout << "Nhap ma phim: ";
+        getline(cin, ma);
+        cout << "Nhap ten phim: ";
+        getline(cin, ten);
+        cout << "Nhap the loai: ";
+        getline(cin, loai);
+        cout << "Nhap rating (1-10): ";
+        cin >> r;
+
+        Movie* newMovie = new Movie(ma, ten, loai, r);
+
+        if (head == NULL) {
+            head = newMovie;
+        }
+        else {
+            Movie* temp = head;
+            while (temp->next != NULL)
+                temp = temp->next;
+            temp->next = newMovie;
+            newMovie->prev = temp;
+        }
+    }
+
+    // Hiển thị danh sách phim
+    void displayAll() {
+        if (head == NULL) {
+            cout << "Danh sach rong!\n";
+            return;
+        }
+
+        Movie* temp = head;
+        while (temp != NULL) {
+            cout << "\nMa phim: " << temp->maPhim;
+            cout << "\nTen phim: " << temp->tenPhim;
+            cout << "\nThe loai: " << temp->theLoai;
+            cout << "\nRating: " << temp->rating << endl;
+            temp = temp->next;
+        }
+    }
+
+    // Tìm phim theo mã
+    void searchById() {
+        if (head == NULL) {
+            cout << "Danh sach rong!\n";
+            return;
+        }
+
+        string ma;
+        cin.ignore();
+        cout << "Nhap ma phim can tim: ";
+        getline(cin, ma);
+
+        Movie* temp = head;
+        while (temp != NULL) {
+            if (temp->maPhim == ma) {
+                cout << "\nTim thay phim:";
+                cout << "\nTen phim: " << temp->tenPhim;
+                cout << "\nThe loai: " << temp->theLoai;
+                cout << "\nRating: " << temp->rating << endl;
+                return;
+            }
+            temp = temp->next;
+        }
+        cout << "Khong tim thay phim!\n";
+    }
+
+    // Phim rating cao nhất
+    void highestRating() {
+        if (head == NULL) return;
+
+        Movie* maxMovie = head;
+        Movie* temp = head->next;
+
+        while (temp != NULL) {
+            if (temp->rating > maxMovie->rating)
+                maxMovie = temp;
+            temp = temp->next;
+        }
+
+        cout << "\nPhim co rating cao nhat:";
+        cout << "\nTen phim: " << maxMovie->tenPhim;
+        cout << "\nRating: " << maxMovie->rating << endl;
+    }
+
+
+    // Phim rating thấp nhất
+    void lowestRating() {
+        if (head == NULL) return;
+
+        Movie* minMovie = head;
+        Movie* temp = head->next;
+
+        while (temp != NULL) {
+            if (temp->rating < minMovie->rating)
+                minMovie = temp;
+            temp = temp->next;
+        }
+
+        cout << "\nPhim co rating thap nhat:";
+        cout << "\nTen phim: " << minMovie->tenPhim;
+        cout << "\nRating: " << minMovie->rating << endl;
+    }
+};
+
+// ===== Main =====
+int main() {    
+    MovieList list;
+    int choice;
 
     do {
-        cout << "\n========== MENU QUAN LY PHIM ==========" << endl;
-        cout << "1. Nhap lieu (Them phim moi liên tuc)" << endl;
-        cout << "2. Hien thi tat ca phim" << endl;
-        cout << "3. Tim phim theo ma phim" << endl;
-        cout << "4. Phim co diem danh gia CAO NHAT" << endl;
-        cout << "5. Phim co diem danh gia THAP NHAT" << endl;
-        cout << "0. Thoat" << endl;
-        cout << "Nhap lua chon: ";
-        cin >> luaChon;
-        cin.ignore(); // Xóa bộ nhớ đệm
+        cout << "\n===== MENU =====";
+        cout << "\n1. Them phim";
+        cout << "\n2. Hien thi danh sach";
+        cout << "\n3. Tim phim theo ma";
+        cout << "\n4. Phim rating cao nhat";
+        cout << "\n5. Phim rating thap nhat";
+        cout << "\n0. Thoat";
+        cout << "\nChon: ";
+        cin >> choice;
 
-        switch (luaChon) {
-            case 1: {
-                char tiepTuc;
-                do {
-                    string ma, ten, tl;
-                    double diem;
-                    cout << "\n--- Nhap thong tin phim ---" << endl;
-                    cout << "Nhap ma phim: "; getline(cin, ma);
-                    cout << "Nhap ten phim: "; getline(cin, ten);
-                    cout << "Nhap the loai: "; getline(cin, tl);
-                    cout << "Nhap diem danh gia (1-10): "; cin >> diem;
-                    
-                    // Thêm phim vào danh sách
-                    dsPhim.push_back(Phim(ma, ten, tl, diem));
-
-                    // Hỏi người dùng có muốn nhập tiếp không
-                    cout << "Ban co muon nhap tiep phim nua khong? (c/k): ";
-                    cin >> tiepTuc;
-                    cin.ignore(); // Xóa bộ nhớ đệm để không lỗi getline lần sau
-
-                } while (tiepTuc == 'c' || tiepTuc == 'C'); 
-                // Vòng lặp này giúp bạn nhập bao nhiêu phim tùy thích trước khi về Menu
-                break;
-            }
-            case 2: {
-                if (dsPhim.empty()) {
-                    cout << "\n>> Danh sach hien dang trong!" << endl;
-                } else {
-                    cout << "\n--- DANH SACH PHIM ---" << endl;
-                    for (const auto& p : dsPhim) p.hienThi();
-                }
-                break;
-            }
-            case 3: {
-                string maTim;
-                cout << "Nhap ma phim can tim: "; getline(cin, maTim);
-                bool timThay = false;
-                for (const auto& p : dsPhim) {
-                    if (p.getMaPhim() == maTim) {
-                        cout << "Ket qua: "; p.hienThi();
-                        timThay = true;
-                        break;
-                    }
-                }
-                if (!timThay) cout << "Khong tim thay ma phim nay!" << endl;
-                break;
-            }
-            case 4: {
-                if (dsPhim.empty()) {
-                    cout << "\n>> Danh sach trong, khong the tim phim cao nhat!" << endl;
-                } else {
-                    Phim pMax = dsPhim.front();
-                    for (const auto& p : dsPhim) {
-                        if (p.getDiem() > pMax.getDiem()) pMax = p;
-                    }
-                    cout << "\n>> Phim rating CAO NHAT: "; pMax.hienThi();
-                }
-                break;
-            }
-            case 5: {
-                if (dsPhim.empty()) {
-                    cout << "\n>> Danh sach trong, khong the tim phim thap nhat!" << endl;
-                } else {
-                    Phim pMin = dsPhim.front();
-                    for (const auto& p : dsPhim) {
-                        if (p.getDiem() < pMin.getDiem()) pMin = p;
-                    }
-                    cout << "\n>> Phim rating THAP NHAT: "; pMin.hienThi();
-                }
-                break;
-            }
-            case 0:
-                cout << "Dang thoat chương trình..." << endl;
-                break;
-            default:
-                cout << "Lua chon khong hop le! Vui long nhap lai." << endl;
+        switch (choice) {
+        case 1: list.addMovie(); break;
+        case 2: list.displayAll(); break;
+        case 3: list.searchById(); break;
+        case 4: list.highestRating(); break;
+        case 5: list.lowestRating(); break;
         }
-    } while (luaChon != 0);
+    } while (choice != 0);
 
     return 0;
 }

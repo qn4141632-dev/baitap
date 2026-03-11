@@ -1,0 +1,25 @@
+# Bài 1: Số giây trong 42 phút 42 giây
+minutes = 42
+seconds = 42
+total_seconds = minutes * 60 + seconds
+print("Tổng số giây:", total_seconds)
+
+# Bài 2: Số dặm trong 10 km (1 mile = 1.61 km)
+kilometers = 10
+miles = kilometers / 1.61
+print("Số dặm trong 10 km:", miles)
+
+# Bài 3: Tính pace và speed
+# Thời gian chạy: 42 phút 42 giây
+time_seconds = total_seconds
+time_hours = time_seconds / 3600
+
+# Pace (thời gian trung bình mỗi mile)
+pace_seconds_per_mile = time_seconds / miles
+pace_minutes = int(pace_seconds_per_mile // 60)
+pace_seconds = int(pace_seconds_per_mile % 60)
+print(f"Pace trung bình: {pace_minutes} phút {pace_seconds} giây mỗi mile")
+
+# Speed (tốc độ trung bình theo mph)
+speed_mph = miles / time_hours
+print("Tốc độ trung bình (mph):", speed_mph)

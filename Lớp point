@@ -1,3 +1,5 @@
+import math
+
 class Point:
     def __init__(self, x: int, y: int):
         self.x = x
@@ -46,3 +48,7 @@ if __name__ == "__main__":
 
     # Khoảng cách từ A đến B
     print("Khoảng cách từ A đến B:", A.distance_to(B))
+
+
+
+

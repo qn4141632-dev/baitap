@@ -1,0 +1,48 @@
+class Point:
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
+
+    # Hiển thị tọa độ
+    def display(self):
+        print(f"({self.x}, {self.y})")
+
+    # Tạo điểm đối xứng qua gốc O
+    def symmetric(self):
+        return Point(-self.x, -self.y)
+
+    # Khoảng cách đến gốc O
+    def distance_to_origin(self):
+        return math.sqrt(self.x**2 + self.y**2)
+
+    # Khoảng cách đến một điểm khác
+    def distance_to(self, other):
+        dx = self.x - other.x
+        dy = self.y - other.y
+        return math.sqrt(dx**2 + dy**2)
+
+
+# Ví dụ sử dụng
+if __name__ == "__main__":
+    # Tạo điểm A(3,4)
+    A = Point(3, 4)
+    print("Điểm A:", end=" ")
+    A.display()
+
+    # Nhập điểm B từ bàn phím
+    xB = int(input("Nhập hoành độ B: "))
+    yB = int(input("Nhập tung độ B: "))
+    B = Point(xB, yB)
+    print("Điểm B:", end=" ")
+    B.display()
+
+    # Tạo điểm C đối xứng với B qua gốc O
+    C = B.symmetric()
+    print("Điểm C đối xứng với B:", end=" ")
+    C.display()
+
+    # Khoảng cách từ B đến O
+    print("Khoảng cách từ B đến O:", B.distance_to_origin())
+
+    # Khoảng cách từ A đến B
+    print("Khoảng cách từ A đến B:", A.distance_to(B))

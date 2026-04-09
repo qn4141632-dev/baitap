@@ -23,28 +23,33 @@ class Point:
         dy = self.y - other.y
         return math.sqrt(dx**2 + dy**2)
 
+    # Thêm __str__ để in trực tiếp đối tượng
+    def __str__(self):
+        return f"Point({self.x}, {self.y})"
+
 
 # Ví dụ sử dụng
 if __name__ == "__main__":
     # Tạo điểm A(3,4)
     A = Point(3, 4)
-    print("Điểm A:", end=" ")
-    A.display()
+    print("Điểm A:", A)
 
     # Nhập điểm B từ bàn phím
     xB = int(input("Nhập hoành độ B: "))
     yB = int(input("Nhập tung độ B: "))
     B = Point(xB, yB)
-    print("Điểm B:", end=" ")
-    B.display()
+    print("Điểm B:", B)
 
     # Tạo điểm C đối xứng với B qua gốc O
     C = B.symmetric()
-    print("Điểm C đối xứng với B:", end=" ")
-    C.display()
+    print("Điểm C đối xứng với B:", C)
 
     # Khoảng cách từ B đến O
     print("Khoảng cách từ B đến O:", B.distance_to_origin())
+
+    # Khoảng cách từ A đến B
+    print("Khoảng cách từ A đến B:", A.distance_to(B))
+
 
     # Khoảng cách từ A đến B
     print("Khoảng cách từ A đến B:", A.distance_to(B))

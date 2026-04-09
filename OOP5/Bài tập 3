@@ -1,8 +1,4 @@
-# Bài tập 3 - Quản lý Cán bộ
-# Họ tên: [Điền họ tên của bạn]
-# MSSV:   [Điền MSSV của bạn]
-
-class CanBo:
+ CanBo:
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi):
         self.ho_ten = ho_ten
         self.tuoi = tuoi

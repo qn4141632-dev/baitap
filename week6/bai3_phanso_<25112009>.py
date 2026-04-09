@@ -59,7 +59,7 @@ class PhanSo:
         return self.tu * other.mau > other.tu * self.mau
 
 
-# ====================== MENU CONSOLE ======================
+#  MENU CONSOLE 
 def nhap_phan_so():
     tu = int(input("Nhập tử số: "))
     mau = int(input("Nhập mẫu số: "))

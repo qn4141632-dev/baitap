@@ -123,7 +123,7 @@ class QLCB:
                 print("Lựa chọn không hợp lệ! Vui lòng chọn lại.")
 
 
-# ====================== CHẠY CHƯƠNG TRÌNH ======================
+#  CHẠY CHƯƠNG TRÌNH 
 if __name__ == "__main__":
     ql = QLCB()
     ql.chay()

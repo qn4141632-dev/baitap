@@ -1,13 +1,13 @@
 from abc import ABC, abstractmethod
 
-# ====================== CUSTOM EXCEPTIONS ======================
+#  CUSTOM EXCEPTIONS 
 class TuoiKhongHopLe(Exception):
     pass
 
 class BacKhongHopLe(Exception):
     pass
 
-# ====================== ABSTRACT CLASS ======================
+#  ABSTRACT CLASS 
 class CanBo(ABC):
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi):
         self.ho_ten = ho_ten
@@ -41,7 +41,7 @@ class CanBo(ABC):
     def __lt__(self, other):
         return self.ho_ten < other.ho_ten
 
-# ====================== SUBCLASSES ======================
+#  SUBCLASSES 
 class CongNhan(CanBo):
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi, bac):
         super().__init__(ho_ten, tuoi, gioi_tinh, dia_chi)
@@ -85,7 +85,7 @@ class NhanVien(CanBo):
     def __str__(self):
         return super().__str__() + f" | {self.mo_ta()}"
 
-# ====================== QUẢN LÝ CÁN BỘ ======================
+#  QUẢN LÝ CÁN BỘ 
 class QLCB:
     def __init__(self, filename="canbo.txt"):
         self.danh_sach = []

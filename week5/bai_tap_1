@@ -53,7 +53,7 @@ class HangThucPham(HangHoa):
         print("-" * 50)
 
 
-# ====================== CHƯƠNG TRÌNH CHÍNH ======================
+#  CHƯƠNG TRÌNH CHÍNH 
 if __name__ == "__main__":
     print("=== BÀI TẬP 1: QUẢN LÝ HÀNG HÓA ===\n")
 

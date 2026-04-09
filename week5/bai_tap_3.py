@@ -1,129 +1,67 @@
- CanBo:
+class CanBo:
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi):
         self.ho_ten = ho_ten
         self.tuoi = tuoi
-        self.gioi_tinh = gioi_tinh  # "Nam", "Nữ", "Khác"
+        self.gioi_tinh = gioi_tinh
         self.dia_chi = dia_chi
 
-    def hien_thi_thong_tin(self):
-        print(f"Họ tên     : {self.ho_ten}")
-        print(f"Tuổi       : {self.tuoi}")
-        print(f"Giới tính  : {self.gioi_tinh}")
-        print(f"Địa chỉ    : {self.dia_chi}")
-
+    def __str__(self):
+        return f"{self.ho_ten} - {self.tuoi} tuổi - {self.gioi_tinh} - {self.dia_chi}"
 
 class CongNhan(CanBo):
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi, bac):
         super().__init__(ho_ten, tuoi, gioi_tinh, dia_chi)
-        self.bac = bac  # Bậc từ 1 đến 10
+        if not (1 <= bac <= 10):
+            raise ValueError("Bậc công nhân phải từ 1 đến 10")
+        self.bac = bac
 
-    def hien_thi_thong_tin(self):
-        super().hien_thi_thong_tin()
-        print(f"Bậc        : {self.bac}")
-        print("-" * 50)
-
+    def __str__(self):
+        return super().__str__() + f" | Công nhân bậc {self.bac}"
 
 class KySu(CanBo):
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi, nganh_dao_tao):
         super().__init__(ho_ten, tuoi, gioi_tinh, dia_chi)
         self.nganh_dao_tao = nganh_dao_tao
 
-    def hien_thi_thong_tin(self):
-        super().hien_thi_thong_tin()
-        print(f"Ngành đào tạo: {self.nganh_dao_tao}")
-        print("-" * 50)
-
+    def __str__(self):
+        return super().__str__() + f" | Kỹ sư ngành {self.nganh_dao_tao}"
 
 class NhanVien(CanBo):
     def __init__(self, ho_ten, tuoi, gioi_tinh, dia_chi, cong_viec):
         super().__init__(ho_ten, tuoi, gioi_tinh, dia_chi)
         self.cong_viec = cong_viec
 
-    def hien_thi_thong_tin(self):
-        super().hien_thi_thong_tin()
-        print(f"Công việc   : {self.cong_viec}")
-        print("-" * 50)
-
+    def __str__(self):
+        return super().__str__() + f" | Nhân viên công việc: {self.cong_viec}"
 
 class QLCB:
     def __init__(self):
         self.danh_sach = []
 
-    def them_can_bo(self):
-        print("\n--- Thêm cán bộ mới ---")
-        loai = input("Chọn loại cán bộ (1: Công nhân, 2: Kỹ sư, 3: Nhân viên): ")
+    def them_moi(self, canbo):
+        self.danh_sach.append(canbo)
 
-        ho_ten = input("Họ tên: ")
-        tuoi = int(input("Tuổi: "))
-        gioi_tinh = input("Giới tính (Nam/Nữ/Khác): ")
-        dia_chi = input("Địa chỉ: ")
+    def tim_kiem(self, ten):
+        return [cb for cb in self.danh_sach if ten.lower() in cb.ho_ten.lower()]
 
-        if loai == "1":
-            bac = int(input("Bậc (1-10): "))
-            cb = CongNhan(ho_ten, tuoi, gioi_tinh, dia_chi, bac)
-        elif loai == "2":
-            nganh = input("Ngành đào tạo: ")
-            cb = KySu(ho_ten, tuoi, gioi_tinh, dia_chi, nganh)
-        elif loai == "3":
-            cv = input("Công việc: ")
-            cb = NhanVien(ho_ten, tuoi, gioi_tinh, dia_chi, cv)
-        else:
-            print("Loại cán bộ không hợp lệ!")
-            return
+    def hien_thi(self):
+        for cb in self.danh_sach:
+            print(cb)
 
-        self.danh_sach.append(cb)
-        print("Thêm cán bộ thành công!\n")
-
-    def tim_kiem(self):
-        print("\n--- Tìm kiếm cán bộ ---")
-        ten = input("Nhập họ tên cần tìm: ").strip().lower()
-        ket_qua = [cb for cb in self.danh_sach if ten in cb.ho_ten.lower()]
-
-        if not ket_qua:
-            print("Không tìm thấy cán bộ nào!")
-        else:
-            print(f"Tìm thấy {len(ket_qua)} kết quả:")
-            for i, cb in enumerate(ket_qua, 1):
-                print(f"\nKết quả {i}:")
-                cb.hien_thi_thong_tin()
-
-    def hien_thi_danh_sach(self):
-        print("\n=== DANH SÁCH TẤT CẢ CÁN BỘ ===")
-        if not self.danh_sach:
-            print("Danh sách trống!")
-            return
-
-        for i, cb in enumerate(self.danh_sach, 1):
-            print(f"\nCán bộ {i}:")
-            cb.hien_thi_thong_tin()
-
-    def chay(self):
-        while True:
-            print("\n" + "="*40)
-            print("          QUẢN LÝ CÁN BỘ")
-            print("="*40)
-            print("1. Thêm mới cán bộ")
-            print("2. Tìm kiếm theo họ tên")
-            print("3. Hiển thị danh sách cán bộ")
-            print("4. Thoát chương trình")
-            print("="*40)
-
-            lua_chon = input("Nhập lựa chọn (1-4): ")
-
-            if lua_chon == "1":
-                self.them_can_bo()
-            elif lua_chon == "2":
-                self.tim_kiem()
-            elif lua_chon == "3":
-                self.hien_thi_danh_sach()
-            elif lua_chon == "4":
-                print("Đã thoát chương trình. Tạm biệt!")
-                break
-            else:
-                print("Lựa chọn không hợp lệ! Vui lòng chọn lại.")
-
-
-#  CHẠY CHƯƠNG TRÌNH 
+#  DEMO 
 if __name__ == "__main__":
     ql = QLCB()
-    ql.chay()
+
+    # Thêm cán bộ
+    ql.them_moi(CongNhan("Nguyễn Văn A", 30, "Nam", "Hà Nội", 5))
+    ql.them_moi(KySu("Trần Thị B", 28, "Nữ", "Hải Phòng", "Cơ khí"))
+    ql.them_moi(NhanVien("Lê Văn C", 25, "Nam", "Đà Nẵng", "Kế toán"))
+
+    print("=== Danh sách cán bộ ===")
+    ql.hien_thi()
+
+    print("\n=== Tìm kiếm theo tên 'B' ===")
+    ket_qua = ql.tim_kiem("B")
+    for cb in ket_qua:
+        print(cb)
+

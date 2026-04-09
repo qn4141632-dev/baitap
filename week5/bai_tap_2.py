@@ -1,7 +1,3 @@
-# Bài tập Quản lý Nhân viên - OOP Python
-# Họ tên: Nguyễn Thị Quỳnh Anh
-# MSSV:  25112009
-
 class NhanVien:
     def __init__(self, ma_nhan_vien, ho_ten, nam_sinh, gioi_tinh, dia_chi, he_so_luong, luong_toi_da):
         self.ma_nhan_vien = ma_nhan_vien

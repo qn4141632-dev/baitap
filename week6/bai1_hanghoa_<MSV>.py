@@ -1,16 +1,12 @@
-# Bài tập 1 - Quản lý hàng hóa
-# Họ tên: Nguyễn Thị Quỳnh Anh
-# MSSV: 25112009
-
 from abc import ABC, abstractmethod
 from datetime import datetime
 
-# ====================== CUSTOM EXCEPTION ======================
+#  CUSTOM EXCEPTION 
 class InvalidHangHoaError(Exception):
     """Ngoại lệ cho dữ liệu hàng hóa không hợp lệ"""
     pass
 
-# ====================== ABSTRACT CLASS ======================
+#  ABSTRACT CLASS 
 class HangHoa(ABC):
     def __init__(self, ma_hang, ten_hang, nha_san_xuat, gia):
         self.ma_hang = ma_hang
@@ -47,7 +43,7 @@ class HangHoa(ABC):
     def __hash__(self):
         return hash(self.ma_hang)
 
-# ====================== SUBCLASSES ======================
+#  SUBCLASSES 
 class HangDienMay(HangHoa):
     def __init__(self, ma_hang, ten_hang, nha_san_xuat, gia, cong_suat, dien_ap, thoi_gian_bao_hanh):
         super().__init__(ma_hang, ten_hang, nha_san_xuat, gia)
@@ -84,7 +80,7 @@ class HangThucPham(HangHoa):
         print(f"Ngày hết hạn: {self.ngay_het_han.strftime('%d/%m/%Y')}")
         print("-" * 50)
 
-# ====================== CONTEXT MANAGER ======================
+#  CONTEXT MANAGER 
 class QuanLyHangHoa:
     """Quản lý danh sách hàng hóa bằng context manager"""
     def __init__(self):
@@ -104,13 +100,22 @@ class QuanLyHangHoa:
             h.xuat_thong_tin()
         print("Kết thúc quản lý hàng hóa.")
 
-# ====================== DEMO ======================
+#  DEMO 
 if __name__ == "__main__":
     print("=== BÀI TẬP 1: QUẢN LÝ HÀNG HÓA ===\n")
     try:
         with QuanLyHangHoa() as ql:
             may_giat = HangDienMay("DM001", "Máy giặt LG Inverter 9kg", "LG Electronics", 8500000, 450, 220, 24)
             bo_bat_dia = HangSanhSu("SS001", "Bộ bát đĩa sứ cao cấp 20 món", "Minh Long", 1250000, "Sứ cao cấp")
+            sua_tuoi = HangThucPham("TP001", "Sữa tươi Vinamilk 1 lít", "Vinamilk", 45000, "02/04/2026", "02/07/2026")
+
+            ql.them_hang(may_giat)
+            ql.them_hang(bo_bat_dia)
+            ql.them_hang(sua_tuoi)
+
+    except InvalidHangHoaError as e:
+        print("Lỗi:", e)
+
             sua_tuoi = HangThucPham("TP001", "Sữa tươi Vinamilk 1 lít", "Vinamilk", 45000, "02/04/2026", "02/07/2026")
 
             ql.them_hang(may_giat)

@@ -1,6 +1,6 @@
 # Bài tập Quản lý Nhân viên - OOP Python
-# Họ tên: [Điền họ tên]
-# MSSV:   [Điền MSSV]
+# Họ tên: Nguyễn Thị Quỳnh Anh
+# MSSV:  25112009
 
 class NhanVien:
     def __init__(self, ma_nhan_vien, ho_ten, nam_sinh, gioi_tinh, dia_chi, he_so_luong, luong_toi_da):
@@ -77,7 +77,7 @@ class TruongPhong(NhanVienChinhThuc):
         print("-" * 60)
 
 
-# ====================== CHƯƠNG TRÌNH CHÍNH ======================
+#  CHƯƠNG TRÌNH CHÍNH 
 if __name__ == "__main__":
     print("=== QUẢN LÝ NHÂN VIÊN ===\n")
 

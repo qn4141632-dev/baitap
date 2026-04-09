@@ -1,7 +1,3 @@
-# Bài tập 1 - Quản lý hàng hóa
-# Họ tên: [Điền họ tên của bạn]
-# MSSV:   [Điền MSSV của bạn]
-
 from datetime import datetime
 
 class HangHoa:

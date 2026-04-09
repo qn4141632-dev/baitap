@@ -15,7 +15,7 @@ class Card:
     def __repr__(self):
         return str(self)
 
-# ====================== DECK ======================
+#  DECK 
 class Deck:
     def __init__(self):
         self.cards = [Card(rank, suit) for suit in Card.suits for rank in Card.ranks]
@@ -24,7 +24,7 @@ class Deck:
     def draw(self):
         return self.cards.pop() if self.cards else None
 
-# ====================== HAND ======================
+# HAND 
 class Hand:
     def __init__(self):
         self.cards = []
@@ -35,7 +35,7 @@ class Hand:
     def __str__(self):
         return " ".join(str(c) for c in self.cards)
 
-# ====================== PLAYER ======================
+#  PLAYER 
 class Player:
     def __init__(self, name):
         self.name = name
